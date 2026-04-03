@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Studio Stella Victor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    body {
+      min-height: 100vh;
+      background: #faf0e6;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #e00;
+      animation: fade-in 0.3s ease;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    body.fade-out {
+      opacity: 0;
+    }
+
+    header {
+      padding: 2rem 2rem 5rem;
+      text-align: center;
+    }
+
+    header a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+    }
+
+    header a:hover {
+      opacity: 0.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      padding: 0 7.5rem 10rem;
+      max-width: 100vw;
+      overflow: hidden;
+    }
+
+    @media (max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+        padding: 0 8rem 2.5rem;
+      }
+    }
+
+    .card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: #b00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-overlay span {
+      color: #fff;
+      font-size: clamp(1rem, 2vw, 1.6rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    /* Project detail overlay */
+    .detail {
+      position: fixed;
+      inset: 0;
+      background: #faf0e6;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      overflow-y: auto;
+    }
+
+    .detail.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .detail-close {
+      position: fixed;
+      top: 2rem;
+      right: 2.5rem;
+      z-index: 101;
+      background: none;
+      border: none;
+      color: #e00;
+      font-size: 2rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 300;
+      line-height: 1;
+      transition: opacity 0.2s;
+    }
+
+    .detail-close:hover {
+      opacity: 0.5;
+    }
+
+    .detail-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 6rem 2rem 5rem;
+    }
+
+    .detail-body h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-body p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .detail-body .detail-meta {
+      font-size: 0.95rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e00;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">Studio Stella Victor</a>
+  </header>
+  <main class="grid">
+    <div class="card" data-name="Project Alpha" data-img="https://picsum.photos/seed/alpha/1200/800" data-category="Branding" data-desc="A comprehensive brand identity system crafted for a modern lifestyle company. The project encompassed logo design, typography selection, color palette development, and brand guidelines documentation.">
+      <img src="https://picsum.photos/seed/alpha/600/600" alt="Project Alpha">
+      <div class="card-overlay"><span>Project Alpha</span></div>
+    </div>
+    <div class="card" data-name="Project Bravo" data-img="https://picsum.photos/seed/bravo/1200/800" data-category="Editorial" data-desc="Editorial design for an independent arts and culture magazine. Layouts balance bold typography with carefully curated photography across 120 pages.">
+      <img src="https://picsum.photos/seed/bravo/600/600" alt="Project Bravo">
+      <div class="card-overlay"><span>Project Bravo</span></div>
+    </div>
+    <div class="card" data-name="Project Charlie" data-img="https://picsum.photos/seed/charlie/1200/800" data-category="Web Design" data-desc="A responsive digital experience for an architectural studio. Clean lines and generous whitespace let the photography take center stage.">
+      <img src="https://picsum.photos/seed/charlie/600/600" alt="Project Charlie">
+      <div class="card-overlay"><span>Project Charlie</span></div>
+    </div>
+    <div class="card" data-name="Project Delta" data-img="https://picsum.photos/seed/delta/1200/800" data-category="Packaging" data-desc="Packaging design for an artisanal coffee roaster. The system spans bags, boxes, and labels with a tactile, craft-forward aesthetic.">
+      <img src="https://picsum.photos/seed/delta/600/600" alt="Project Delta">
+      <div class="card-overlay"><span>Project Delta</span></div>
+    </div>
+    <div class="card" data-name="Project Echo" data-img="https://picsum.photos/seed/echo/1200/800" data-category="Identity" data-desc="Visual identity for a contemporary art gallery. Minimal yet expressive, the identity adapts fluidly across print and digital touchpoints.">
+      <img src="https://picsum.photos/seed/echo/600/600" alt="Project Echo">
+      <div class="card-overlay"><span>Project Echo</span></div>
+    </div>
+    <div class="card" data-name="Project Foxtrot" data-img="https://picsum.photos/seed/foxtrot/1200/800" data-category="Campaign" data-desc="An integrated advertising campaign for a sustainable fashion label. Art direction, photography, and copywriting unified under a single creative vision.">
+      <img src="https://picsum.photos/seed/foxtrot/600/600" alt="Project Foxtrot">
+      <div class="card-overlay"><span>Project Foxtrot</span></div>
+    </div>
+    <div class="card" data-name="Project Golf" data-img="https://picsum.photos/seed/golf/1200/800" data-category="Typography" data-desc="A custom typeface commissioned for a luxury hospitality brand. Two weights with matching italics designed for both display and body use.">
+      <img src="https://picsum.photos/seed/golf/600/600" alt="Project Golf">
+      <div class="card-overlay"><span>Project Golf</span></div>
+    </div>
+    <div class="card" data-name="Project Hotel" data-img="https://picsum.photos/seed/hotel/1200/800" data-category="Spatial" data-desc="Environmental graphics and wayfinding for a mixed-use development. Signage, murals, and environmental installations create a cohesive spatial narrative.">
+      <img src="https://picsum.photos/seed/hotel/600/600" alt="Project Hotel">
+      <div class="card-overlay"><span>Project Hotel</span></div>
+    </div>
+    <div class="card" data-name="Project India" data-img="https://picsum.photos/seed/india/1200/800" data-category="Motion" data-desc="Motion design and animation for a tech product launch. A series of short films and social assets bring the brand story to life through movement.">
+      <img src="https://picsum.photos/seed/india/600/600" alt="Project India">
+      <div class="card-overlay"><span>Project India</span></div>
+    </div>
+  </main>
+
+  <div class="detail" id="detail">
+    <button class="detail-close" id="detail-close">&times;</button>
+    <div class="detail-body">
+      <p class="detail-meta" id="detail-meta"></p>
+      <h2 id="detail-title"></h2>
+      <p id="detail-desc"></p>
+    </div>
+  </div>
+
+  <script>
+    var detail = document.getElementById('detail');
+    var detailTitle = document.getElementById('detail-title');
+    var detailMeta = document.getElementById('detail-meta');
+    var detailDesc = document.getElementById('detail-desc');
+
+    document.querySelectorAll('.card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        detailTitle.textContent = card.dataset.name;
+        detailMeta.textContent = card.dataset.category;
+        detailDesc.textContent = card.dataset.desc;
+        detail.classList.add('active');
+        detail.scrollTop = 0;
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('detail-close').addEventListener('click', function () {
+      detail.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    detail.addEventListener('click', function (e) {
+      if (e.target === detail) {
+        detail.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var href = this.href;
+        if (href && href.indexOf(location.origin) === 0) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(function () { window.location = href; }, 300);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
