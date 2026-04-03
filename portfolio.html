@@ -48,7 +48,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2.5rem;
-      padding: 0 7.5rem 10rem;
+      padding: 0 7.5rem 4rem;
       max-width: 100vw;
       overflow: hidden;
     }
@@ -205,6 +205,128 @@
       color: #e00;
       margin-bottom: 2rem;
     }
+
+    /* Marquee banner */
+    .marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 4rem 0 2rem;
+      mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 60s linear infinite;
+    }
+
+    .marquee-track span {
+      font-size: clamp(5rem, 14vw, 14rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #e00;
+      opacity: 1;
+      padding: 0 2rem;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Contact section */
+    .contact-section {
+      min-height: 60vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 4rem 7.5rem 8rem;
+    }
+
+    .contact-inner {
+      display: flex;
+      gap: 6rem;
+      width: 100%;
+      max-width: 1400px;
+      opacity: 0;
+      transform: translateY(3rem);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .contact-inner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-brief {
+      flex: 1;
+    }
+
+    .contact-brief p {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.45;
+      color: #333;
+    }
+
+    .contact-details {
+      flex: 1;
+      text-align: center;
+    }
+
+    .contact-details a {
+      color: #333;
+      text-decoration: none;
+      font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.3s;
+      display: block;
+    }
+
+    .contact-details a:hover {
+      color: #e00;
+    }
+
+    .contact-line {
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-divider {
+      margin: 1.5rem 0;
+      color: #333;
+      font-size: 1.2rem;
+    }
+
+    .contact-socials {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .contact-socials a {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .contact-section {
+        padding: 3rem 1.5rem 5rem;
+      }
+
+      .contact-inner {
+        flex-direction: column;
+        gap: 3rem;
+      }
+
+      .contact-details {
+        text-align: left;
+      }
+
+      .contact-socials {
+        justify-content: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -250,6 +372,28 @@
     </div>
   </main>
 
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span><span>Contact</span>
+    </div>
+  </div>
+  <section class="contact-section">
+    <div class="contact-inner" id="contact">
+      <div class="contact-brief">
+        <p>Good things start with a simple hello. If you'd like to know more about my work, explore a collaboration, or have a project in mind, don't hesitate to reach out.</p>
+      </div>
+      <div class="contact-details">
+        <div class="contact-line"><a href="tel:+46722514223">tel. (+46) 72 251 42 23</a></div>
+        <div class="contact-line"><a href="mailto:stella.victor.home@gmail.com">stella.victor.home@gmail.com</a></div>
+        <div class="contact-divider">—</div>
+        <div class="contact-socials">
+          <a href="https://www.instagram.com/avstellavictor/" target="_blank" rel="noopener">@stellavictor</a>
+          <a href="https://www.linkedin.com/in/stella-victor-b5788921b/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="detail" id="detail">
     <button class="detail-close" id="detail-close">&times;</button>
     <div class="detail-body">
@@ -290,6 +434,7 @@
 
     document.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function (e) {
+        if (this.classList.contains('email-link') || this.hasAttribute('target')) return;
         var href = this.href;
         if (href && href.indexOf(location.origin) === 0) {
           e.preventDefault();
@@ -298,6 +443,17 @@
         }
       });
     });
+
+    // Reveal contact section on scroll
+    var contactEl = document.getElementById('contact');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          contactEl.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    observer.observe(contactEl);
   </script>
 </body>
 </html>
